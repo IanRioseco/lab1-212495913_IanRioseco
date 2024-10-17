@@ -1,12 +1,13 @@
 #lang racket
 (require "TDAplayer.rkt")
-(require "TDAboard.rkt")
-;(require "TDAsePuedeJugar.rkt")
 (require "TDApiece.rkt")
+(require "TDAboard.rkt")
+(require "TDAgame.rkt")
 
 #| EJEMPLO DE COMO ACTUALIZAR LOS DATOS DE UN JUGADOR |#
 ;; Definimos un jugador inicial
-(define jugador (player 1 "Ian" "rojo" 2 1 0 21))  ; Jugador inicial con 21 piezas
+(define jugador (player 1 "Ian" "red" 2 1 0 21))  ; Jugador inicial con 21 piezas
+(define jugador2 (player 1 "nai" "yellow" 2 1 0 21))
 
 ;; Llamamos a la función para decrementar las piezas
 (define jugador-actualizado (decrease-player-pieces jugador))
@@ -38,7 +39,7 @@
 (newline)
 (board-can-play? tablero)
 
-(define red-piece (piece "yellow"))
+(define red-piece (piece 'yellow))
 (display red-piece)
 (newline)
 
@@ -49,3 +50,13 @@
 (newline)
 (display tab2)
 (newline)
+(define tab3 (board-set-play-piece tab2 4 red-piece))
+(define tab4 (board-set-play-piece tab3 4 red-piece))
+(define tab5 (board-set-play-piece tab4 4 red-piece))
+(display tab4)
+
+(check-vertical-win tab5)
+(newline)
+
+(define new-game (game jugador jugador2 tab5 1))
+(display new-game)
