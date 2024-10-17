@@ -1,0 +1,16 @@
+#lang racket
+(provide (all-defined-out))
+; Descripción: funcion que crea un tablero de conecta4 vacio.
+; Dom: no recibe parametros.
+; Rec: board
+; Tipo recursión: No aplica.
+
+(define (columnas)
+  (list 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio))
+(define (board)
+  (list (columnas)
+        (columnas)
+        (columnas)
+        (columnas)
+        (columnas)
+        (columnas)))

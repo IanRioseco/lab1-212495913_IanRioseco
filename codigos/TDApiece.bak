@@ -1,0 +1,19 @@
+#lang racket
+(provide (all-defined-out))
+; Descripción: funcion con la cual se crea una piece especificando el color del cual la quiere.
+; Dom: color (string).
+; Rec: piece.
+; Tipo recursión: No aplica.
+
+;constructor
+
+(define (piece color)
+  (list color)
+  (car piece))
+
+#|(define (piece color)
+  (list color))
+
+;selector
+(define (piece-color piece)
+  (car piece))|#
