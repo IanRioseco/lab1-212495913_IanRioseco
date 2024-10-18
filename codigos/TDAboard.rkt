@@ -2,27 +2,38 @@
 (provide (all-defined-out))
 (require "TDApiece.rkt")
 (require "TDAplayer.rkt")
-;; CONSTRUCTOR
 
+;; RF04
+; Nombre: TDAboard
 ; Descripción: funcion que crea un tablero de conecta4 vacio.
 ; Dom: no recibe parametros de entrada.
 ; Rec: board.
 ; Tipo recursión: No aplica.
-
+#|
 (define (board)
   (define (columnas)
-    (list 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio))
+    (list 'red 'vaco 'red 'red 'red 'red 'red))
   (list (columnas)
         (columnas)
         (columnas)
         (columnas)
         (columnas)
         (columnas)))
+|#
 
+(define columnas
+  (list 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio))  ; Cambia los valores según lo que quieras
 
-;; OTROS
+(define board
+  (list columnas
+        columnas
+        columnas
+        columnas
+        columnas
+        columnas))  ; Tablero de 5 filas por ejemplo
 
-; TDABoard-otros-sepuedejugar?
+;; RF05
+; Nombre: TDABoard-otros-sepuedejugar?
 ; Descripción: Funcion que verifica si es posible realizar una jugada.
 ; Dom: tablero (board).
 ; Rec: boleano (#t si se puede jugar, #f si no).
@@ -40,13 +51,12 @@
    (tablero-tiene-espacio tablero))
 
 
-;; MODIFICADOR
-
+;; RF06
+; Nombre: TDAboard-set-play-piece
 ; DESCRIPCION: funcion para colocar una ficha en la posicion mas baja disponible en la columna seleccionada
 ; DOM: board(board) X column(int) X piece(piece)
 ; REC: board
-; TIPO DE RECURSION: no aplica.
-
+; TIPO DE RECURSION: recusion natural
 ; Función para colocar una ficha en la columna más baja disponible de una columna
 (define (board-set-play-piece tablero columna pieza)
   ; Función auxiliar para encontrar la fila más baja con una celda vacía
@@ -59,7 +69,6 @@
           (if (equal? (list-ref (car filas-restantes) columna) 'vacio)
               index  ; Si encontramos una celda vacía en la columna especificada, devolvemos el índice de la fila
               (ciclo (cdr filas-restantes) (- index 1))))))  ; Si no es vacía, revisamos la siguiente fila (subiendo)
-
   ; Función auxiliar para reemplazar la celda en una fila específica
   (define (remplazar-en-la-fila fila columna pieza)
     (map (lambda (i x)
@@ -82,19 +91,17 @@
              tablero (range (length tablero))))))  ; Recorrer el tablero con índices de filas
 
 
-
-;TDAboard-check-vertical-win
+;; RF07
+; Nombre: TDAboard-check-vertical-win
 ; Descripción: Funcion que verifica si existe o no un ganador de manera vertical.
 ; Dom: tablero (board).
 ; Rec: int (1 si gana jugador 1, 2 si gana jugador 2 y 0 si no hay gandor vertical)
-; Tipo recursión: natural
-
+; Tipo recursión: recusion natural
 ; Función para verificar victoria vertical en el tablero sin necesidad de pasar jugadores
 (define (check-vertical-win board)
   ; Función auxiliar para obtener todas las columnas del tablero
   (define (get-column board col-index)
     (map (lambda (row) (list-ref row col-index)) board))  ; Extrae la columna correspondiente
-
   ; Función auxiliar para verificar si hay 4 fichas consecutivas en una lista
   (define (four-consecutive? lst)
     (cond
@@ -105,7 +112,6 @@
             (equal? (car lst) (cadddr lst))) 
        (car lst))  ; Retorna el color de la ficha ganadora (puede ser cualquier color)
       (else (four-consecutive? (cdr lst)))))  ; Verifica los siguientes elementos de la lista
-
   ; Recorre cada columna del tablero
   (define (check-columns board col-index)
     (if (>= col-index (length (car board)))  ; Si se recorrieron todas las columnas
@@ -116,11 +122,27 @@
               ((equal? winner 'red) 1)    ; Si el jugador 1 (rojo) gana, retorna 1
               ((equal? winner 'yellow) 2) ; Si el jugador 2 (amarillo) gana, retorna 2
               (else (check-columns board (+ col-index 1))))))))  ; Verifica la siguiente columna
-
   ; Llamada inicial para revisar todas las columnas
   (check-columns board 0))
           
                   
-         
+;; RF08
+; Nombre: 
+; Descripción: 
+; Dom: 
+; Rec: game
+; Tipo recursión: No aplica.
 
+;; RF09
+; Nombre: 
+; Descripción: 
+; Dom: 
+; Rec: game
+; Tipo recursión: No aplica.
 
+;; RF10
+; Nombre:
+; Descripción: 
+; Dom: 
+; Rec: game
+; Tipo recursión: No aplica.

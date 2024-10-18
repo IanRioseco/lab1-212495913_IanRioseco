@@ -4,6 +4,7 @@
 ;; CONSTRUCTOR
 ;para ayudarme en la creacion de este TDA se lepregunto a chat-gpt sobre el uso de listas y la funcionalidad de car y cdr
 
+;; RF02
 ;Desc: Funcion para crear un jugador.
 ;Name: player.
 ;Dom: id(int) X name(string) X color(string) X wins(int) X losses(int) X draws(int) X remaining-pieces(int)
@@ -13,7 +14,6 @@
 
 
 ;; SELECTOR
-
 ;Name:get-player-id
 ;Dom: player
 ;Rec: id del jugador
@@ -44,14 +44,12 @@
 (define (get-player-losses player)
   (car(cddddr player)));con cddddr obtenemos la lista despues del 4 elemento y con car obtenemos el primer elemento de esa lista,
                        ;osea obtenemos el 5 elemento
-
 ;Name:get-player-draws
 ;Dom: player
 ;Rec: numero de empates
 (define (get-player-draws player)
   (cadr (cddddr player)));con cddddr obtenemos la lista despues del 4 elemento y con cadr obtenemos el segundo elemento de esa lista,
                          ;osea obtenemos el 6 elemento
-
 ;Name:get-player-remaining-pieces
 ;Dom: player
 ;Rec: numero de piezas restantes
@@ -60,7 +58,6 @@
                           ;osea obtenemos el 7 elemento
 
 ;; MODIFICADOR
-
 ;funcion para actualizar las victorias del jugador
 ;desc: La función increment-player-wins toma un jugador (una lista que representa sus datos)
 ;y devuelve una nueva lista donde el número de victorias del jugador ha sido incrementado en 1
