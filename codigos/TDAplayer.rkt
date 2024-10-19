@@ -1,9 +1,6 @@
 #lang racket
 (provide (all-defined-out))
 
-;; CONSTRUCTOR
-;para ayudarme en la creacion de este TDA se lepregunto a chat-gpt sobre el uso de listas y la funcionalidad de car y cdr
-
 ;; RF02
 ;Desc: Funcion para crear un jugador.
 ;Name: player.
@@ -11,8 +8,6 @@
 ;Rec: player
 (define (player id name color wins losses draws remaining-pieces)
   (list id name color wins losses draws remaining-pieces))
-
-
 ;; SELECTOR
 ;Name:get-player-id
 ;Dom: player
@@ -106,3 +101,5 @@
           (get-player-losses player)       
           (get-player-draws player)          
           (- (get-player-remaining-pieces player) 1))))
+
+

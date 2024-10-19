@@ -1,0 +1,7 @@
+#lang racket
+(jugador1 (list-ref game 1))
+(jugador2 (list-ref game 0))
+(turno-actual (current-player game))
+(color-actual (get-player-color turno-actual))
+(colorj1 (get-player-color jugador1))
+(colorj2 (get-player-color jugador2))
