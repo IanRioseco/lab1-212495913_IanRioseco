@@ -1,7 +1,7 @@
 #lang racket
 (provide (all-defined-out))
 (require "TDApiece.rkt")
-(require "TDAplayer.rkt")
+
 ;; RF04
 ; Nombre: TDAboard
 ; Descripción: funcion que crea un tablero de conecta4 vacio.
@@ -129,7 +129,7 @@
   (define (check-column column);funcion interna que se encarga de verificar una columna especifica
     (define (check-consecutive lst color count);otra funcion interna que recibe una liksta color y un auxiliar
       (cond ;inicio de una condicion
-        ((null? lst) #f) ;si la liksta esta vacia devolvemos un falso
+        ((null? lst) #f) ;si la lista esta vacia devolvemos un falso
         ((equal? (car lst) 'vacio) (check-consecutive (cdr lst) 'vacio 0)) ;si el primer valor de la lista (car lst) es vacio reinicia el conteo y llama a
                                                                            ;check-consecutive con el resto de la lista (cdr lst) y un color vacio y contador en 0
         ((equal? (car lst) color);si la ficha actual es del mismo color qiue el anterior paso a la condicion if
@@ -189,9 +189,43 @@
 ; Dom: board(board)
 ; Rec: int (1 si gana jugador 1, 2 si gana jugador 2 y 0 si no hay ganador vertical)
 ; Tipo recursión: recursion natural
+ ;Función para verificar si hay una victoria diagonal
+(define (board-check-diagonal-win board)
+  ;; Función para contar fichas consecutivas en diagonal ascendente
+  (define (check-diagonal-ascending row col color)
+    (if (or (>= row (length board))             ;; Verifica si la fila está fuera de los límites del tablero
+            (>= col (length (list-ref board 0))) ;; Verifica si la columna está fuera de los límites del tablero
+            (not (equal? (list-ref (list-ref board row) col) color))) ;; Si no coincide el color, termina
+        0
+        (+ 1 (check-diagonal-ascending (+ row 1) (+ col 1) color))))  ;; Continúa hacia la diagonal ascendente
 
+  ;; Función para contar fichas consecutivas en diagonal descendente
+  (define (check-diagonal-descending row col color)
+    (if (or (< row 0)                             ;; Verifica si la fila es menor que 0 (fuera de los límites)
+            (>= col (length (list-ref board 0)))  ;; Verifica si la columna está fuera de los límites
+            (not (equal? (list-ref (list-ref board row) col) color))) ;; Si no coincide el color, termina
+        0
+        (+ 1 (check-diagonal-descending (- row 1) (+ col 1) color)))) ;; Continúa hacia la diagonal descendente
 
+  ;; Función que recorre el tablero buscando una secuencia ganadora en diagonal
+  (define (check-board row col)
+    (cond
+      ((>= row (length board)) 0) ;; Si llegamos al final del tablero, no hay ganador
+      ((>= col (length (list-ref board 0))) (check-board (+ row 1) 0)) ;; Si llegamos al final de la fila, vamos a la siguiente
+      (else
+        (let ((color (list-ref (list-ref board row) col))) ;; Obtenemos el color de la ficha actual
+          (if (equal? color 'vacio) ;; Si es 'empty', seguimos buscando
+              (check-board row (+ col 1))
+              ;; Verificamos las diagonales
+              (let ((asc (check-diagonal-ascending row col color))
+                    (desc (check-diagonal-descending row col color)))
+                (if (or (>= asc 4) (>= desc 4)) ;; Si hay al menos 4 fichas consecutivas en alguna diagonal
+                    (if (equal? color 'red) 1   ;; Gana el jugador 1 (fichas rojas)
+                        2)                      ;; Gana el jugador 2 (fichas amarillas)
+                    (check-board row (+ col 1))))))))) ;; Seguimos recorriendo el tablero si no hay ganador
 
+  ;; Empezamos el recorrido desde la posición (0, 0)
+  (check-board 0 0))
 
 ;; RF10
 ; Nombre: TDAboard-who-is-winner
@@ -199,11 +233,11 @@
 ; Dom: board(board)
 ; Rec: int (1 si gana jugador 1, 2 si gana jugador 2 y 0 si no hay ganador vertical)
 ; Tipo recursión: No aplica.
-#|
+
 (define (board-who-is-winner board)
   (let ((vertical (board-check-vertical-win board))
         (horizontal (board-check-horizontal-win board))
-        (diagonal (board-check-diagonal-win)))
+        (diagonal (board-check-diagonal-win board)))
     (if (not (eq? vertical 0))
         vertical
         (if (not (eq? horizontal 0))
@@ -211,5 +245,5 @@
             (if (not (eq? diagonal 0))
                 diagonal
                 0)))))
-|#     
+   
         
