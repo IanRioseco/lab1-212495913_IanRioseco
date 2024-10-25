@@ -1,35 +1,19 @@
 #lang racket
 (provide (all-defined-out))
 (require "TDApiece.rkt")
-
+(require "main.rkt")
 ;; RF04
 ; Nombre: TDAboard
 ; Descripción: funcion que crea un tablero de conecta4 vacio.
 ; Dom: no recibe parametros de entrada.
 ; Rec: board.
 ; Tipo recursión: No aplica.
-#|
-(define (board)
-  (define (columnas)
-    (list 'red 'vaco 'red 'red 'red 'red 'red))
-  (list (columnas)
-        (columnas)
-        (columnas)
-        (columnas)
-        (columnas)
-        (columnas)))
-|#
 
 (define columnas
   (list 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio))  ; Cambia los valores según lo que quieras
 
 (define board
-  (list columnas
-        columnas
-        columnas
-        columnas
-        columnas
-        columnas))  ; Tablero de 5 filas por ejemplo
+  (list columnas columnas columnas columnas columnas columnas))  ; Tablero de 5 filas por ejemplo
 
 ;; RF05
 ; Nombre: TDABoard-otros-sepuedejugar?
@@ -97,34 +81,6 @@
 ; Rec: int (1 si gana jugador 1, 2 si gana jugador 2 y 0 si no hay ganador vertical)
 ; Tipo recursión: recusion natural
 #|
-; Función para verificar victoria vertical en el tablero sin necesidad de pasar jugadores
-(define (check-vertical-win tablero)
-  ; Función auxiliar para obtener todas las columnas del tablero
-  (define (get-column tablero-aux col-index)
-    (map (lambda (row) (list-ref row col-index)) tablero-aux))  ; Extrae la columna correspondiente
-  ; Función auxiliar para verificar si hay 4 fichas consecutivas en una lista
-  (define (encontrar-consecutivos lst)
-    (cond
-      ((< (length lst) 4) #f)  ; Si hay menos de 4 elementos, no puede haber 4 consecutivos
-      ((and (not (equal? (car lst) 'empty))  ; Si la primera ficha no es vacía ('empty)
-            (equal? (car lst) (cadr lst))   ; Si las siguientes 3 fichas son iguales
-            (equal? (car lst) (caddr lst))
-            (equal? (car lst) (cadddr lst))) 
-       (car lst))  ; Retorna el color de la ficha ganadora (puede ser cualquier color)
-      (else (encontrar-consecutivos (cdr lst)))))  ; Verifica los siguientes elementos de la lista
-  ; Recorre cada columna del tablero
-  (define (verificar-columna tablero-aux2 col-index)
-    (if (>= col-index (length (car tablero-aux2)))  ; Si se recorrieron todas las columnas
-        0  ; No hay ganador vertical
-        (let ((column (get-column tablero-aux2 col-index)))  ; Extrae la columna actual
-          (let ((winner (encontrar-consecutivos column)))  ; Verifica si hay 4 consecutivas en la columna
-            (cond
-              ((equal? winner 'red) 1)    ; Si el jugador 1 (rojo) gana, retorna 1
-              ((equal? winner 'yellow) 2) ; Si el jugador 2 (amarillo) gana, retorna 2
-              (else (verificar-columna tablero-aux2 (+ col-index 1))))))))  ; Verifica la siguiente columna
-  ; Llamada inicial para revisar todas las columnas
-  (verificar-columna tablero 0))
-|#
 (define (board-check-vertical-win board);define la funcion principal que toma de argumento el tablero
   (define (check-column column);funcion interna que se encarga de verificar una columna especifica
     (define (check-consecutive lst color count);otra funcion interna que recibe una liksta color y un auxiliar
@@ -152,6 +108,37 @@
               ((equal? result 'yellow) 2);si el resultado es igual a 'yellow devuelve 2 por lo que el p2 gano
               (else (check-columns (map cdr filas))))))));si no hay ganador llama a check-column pasandole las filas menos la primera usando pam cdr filas
   (check-columns board));se inicia la verificacion de las columnas
+|#
+(define (board-check-vertical-win board)
+  (define (check-column column)
+    (define (check-consecutive lst color count)
+      (cond
+        ((null? lst) #f)
+        ((equal? (car lst) 'vacio) (check-consecutive (cdr lst) 'vacio 0))
+        ((equal? (car lst) color)
+         (if (= (+ count 1) 4)
+             color
+             (check-consecutive (cdr lst) color (+ count 1))))
+        (else (check-consecutive (cdr lst) (car lst) 1))))
+    (check-consecutive column 'vacio 0))
+  
+  (define (get-column filas)
+    (if (null? filas)
+        '()
+        (cons (car (car filas)) (get-column (cdr filas)))))
+  
+  (define (check-columns filas)
+    (if (null? (car filas))
+        0
+        (let ((column (get-column filas)))
+          (let ((result (check-column column)))
+            (cond
+              ((equal? result 'red) 1)
+              ((equal? result 'yellow) 2)
+              (else (check-columns (map cdr filas))))))))
+  
+  (check-columns board))
+
 
 ;; RF08
 ; Nombre: TDAboard-check-horizontal-win.
@@ -189,6 +176,7 @@
 ; Dom: board(board)
 ; Rec: int (1 si gana jugador 1, 2 si gana jugador 2 y 0 si no hay ganador vertical)
 ; Tipo recursión: recursion natural
+#|
  ;Función para verificar si hay una victoria diagonal
 (define (board-check-diagonal-win board)
   ;; Función para contar fichas consecutivas en diagonal ascendente
@@ -220,12 +208,46 @@
               (let ((asc (check-diagonal-ascending row col color))
                     (desc (check-diagonal-descending row col color)))
                 (if (or (>= asc 4) (>= desc 4)) ;; Si hay al menos 4 fichas consecutivas en alguna diagonal
-                    (if (equal? color 'red) 1   ;; Gana el jugador 1 (fichas rojas)
+                    (if (eq? color 'red) 1   ;; Gana el jugador 1 (fichas rojas)
                         2)                      ;; Gana el jugador 2 (fichas amarillas)
                     (check-board row (+ col 1))))))))) ;; Seguimos recorriendo el tablero si no hay ganador
 
   ;; Empezamos el recorrido desde la posición (0, 0)
   (check-board 0 0))
+|#
+(define (board-check-diagonal-win board)
+  (define (check-diagonal-ascending row col color)
+    (if (or (>= row (length board))
+            (>= col (length (list-ref board 0)))
+            (not (equal? (list-ref (list-ref board row) col) color)))
+        0
+        (+ 1 (check-diagonal-ascending (+ row 1) (+ col 1) color))))
+  
+  (define (check-diagonal-descending row col color)
+    (if (or (< row 0)
+            (>= col (length (list-ref board 0)))
+            (not (equal? (list-ref (list-ref board row) col) color)))
+        0
+        (+ 1 (check-diagonal-descending (- row 1) (+ col 1) color))))
+  
+  (define (check-board row col)
+    (cond
+      ((>= row (length board)) 0)
+      ((>= col (length (list-ref board 0))) (check-board (+ row 1) 0))
+      (else
+        (let ((color (list-ref (list-ref board row) col)))
+          (if (equal? color 'vacio)
+              (check-board row (+ col 1))
+              (let ((asc (check-diagonal-ascending row col color))
+                    (desc (check-diagonal-descending row col color)))
+                (if (or (>= asc 4) (>= desc 4))
+                    (if (eq? color 'red)
+                        1
+                        2)
+                    (check-board row (+ col 1)))))))))
+  
+  (check-board 0 0))  ; Empezar desde la primera fila
+
 
 ;; RF10
 ; Nombre: TDAboard-who-is-winner

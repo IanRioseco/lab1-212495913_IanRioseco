@@ -4,14 +4,15 @@
 (require "TDAboard.rkt")
 (require "TDAgame.rkt")
 
+
 #| EJEMPLO DE COMO ACTUALIZAR LOS DATOS DE UN JUGADOR |#
 ;; Definimos un jugador inicial
 (display "PRUEBA FUNCION CREAR JUGADOR")
 (newline)
-(define jugador-actualizado3 (player 1 "Ian" "red" 0 0 0 21)); Jugador inicial con 21 piezas
+(define jugador-actualizado3 (player 1 "Ian" "yellow" 0 0 0 21)); Jugador inicial con 21 piezas
 (display jugador-actualizado3)
 (newline)
-(define jugador2 (player 2 "nai" "yellow" 0 0 0 21))
+(define jugador2 (player 2 "nai" "red" 0 0 0 21))
 (display jugador2)
 (newline)
 
@@ -65,6 +66,44 @@
 (define g11 (game-player-set-move g10 jugador-actualizado3 3)) ; Juan coloca en columna 3
 (display g11)
 (newline)
+(newline)
 (define ended-game (game-set-end g11))
 (display ended-game)
+(newline)
+(newline)
 
+(display (game-get-board g11))
+(newline)
+(newline)
+
+
+(define a (game-get-board g11))
+(display a)
+(newline)
+
+(define test-board
+  (list
+    (list 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio)
+    (list 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio)
+    (list 'vacio 'vacio 'vacio 'yellow 'vacio 'vacio 'vacio)
+    (list 'vacio 'vacio 'yellow 'vacio 'vacio 'vacio 'vacio)
+    (list 'vacio 'yellow 'vacio 'vacio 'vacio 'vacio 'vacio)
+    (list 'yellow 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio)))
+
+(board-check-diagonal-win test-board)
+
+
+;; Lista inicial de IDs de jugadores
+(define player-ids '())
+
+;; Función que recibe un jugador, saca su ID y lo agrega a la lista
+(define (add-player jugador)
+  (define player-id (get-player-id jugador))  ;; Saca el ID del jugador
+  (set! player-ids (cons player-id player-ids)))  ;; Agrega el ID a la lista
+
+;; Ejemplo de uso
+(add-player jugador2)  ;; Jugador 1 pone una pieza
+(add-player jugador2)  ;; Jugador 2 pone una pieza
+(add-player jugador-actualizado3)  ;; Jugador 1 pone otra pieza
+
+(display player-ids)
