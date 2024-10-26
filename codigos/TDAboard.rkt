@@ -13,7 +13,12 @@
   (list 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio))  ; Cambia los valores según lo que quieras
 
 (define board
-  (list columnas columnas columnas columnas columnas columnas))  ; Tablero de 5 filas por ejemplo
+  (list columnas
+        columnas
+        columnas
+        columnas
+        columnas
+        columnas))  ; Tablero de 5 filas por ejemplo
 
 ;; RF05
 ; Nombre: TDABoard-otros-sepuedejugar?
@@ -80,7 +85,7 @@
 ; Dom: tablero (board).
 ; Rec: int (1 si gana jugador 1, 2 si gana jugador 2 y 0 si no hay ganador vertical)
 ; Tipo recursión: recusion natural
-#|
+
 (define (board-check-vertical-win board);define la funcion principal que toma de argumento el tablero
   (define (check-column column);funcion interna que se encarga de verificar una columna especifica
     (define (check-consecutive lst color count);otra funcion interna que recibe una liksta color y un auxiliar
@@ -102,13 +107,15 @@
     (if (null? (car filas)) ;si la primera fila esta vacia indica que no hay mas columnas para verificar
         0 ;no hay ganador
         (let ((column (get-column filas)));caso contrario extrae la columna usando get-column para asignarla a column
-          (let ((result (check-column column)));verifica la columna actual llamando a check-column y guarda el resultado en result
+          (let ((result (check-column column)))
+            (display result);verifica la columna actual llamando a check-column y guarda el resultado en result
             (cond ;se inicia una condicion
-              ((equal? result 'red) 1);si el resultado es igual a 'red devuelve 1 por lo que el p1 gano
-              ((equal? result 'yellow) 2);si el resultado es igual a 'yellow devuelve 2 por lo que el p2 gano
+              ((equal? result "red") 1);si el resultado es igual a 'red devuelve 1 por lo que el p1 gano
+              ((equal? result "yellow") 2);si el resultado es igual a 'yellow devuelve 2 por lo que el p2 gano
               (else (check-columns (map cdr filas))))))));si no hay ganador llama a check-column pasandole las filas menos la primera usando pam cdr filas
   (check-columns board));se inicia la verificacion de las columnas
-|#
+
+#|
 (define (board-check-vertical-win board)
   (define (check-column column)
     (define (check-consecutive lst color count)
@@ -138,7 +145,7 @@
               (else (check-columns (map cdr filas))))))))
   
   (check-columns board))
-
+|#
 
 ;; RF08
 ; Nombre: TDAboard-check-horizontal-win.

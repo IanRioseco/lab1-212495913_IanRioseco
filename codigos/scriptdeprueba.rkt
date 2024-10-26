@@ -53,16 +53,16 @@
 (game-get-board g0)
 (newline)
 
-(define g1 (game-player-set-move g0 jugador-actualizado3 0))
+(define g1 (game-player-set-move g0 jugador-actualizado3 6))
 (define g2 (game-player-set-move g1 jugador2 1))  ; Mauricio coloca en columna 1
-(define g3 (game-player-set-move g2 jugador-actualizado3 1))  ; Juan coloca en columna 1
+(define g3 (game-player-set-move g2 jugador-actualizado3 6))  ; Juan coloca en columna 1
 (define g4 (game-player-set-move g3 jugador2 2))  ; Mauricio coloca en columna 2
-(define g5 (game-player-set-move g4 jugador-actualizado3 2))  ; Juan coloca en columna 2
+(define g5 (game-player-set-move g4 jugador-actualizado3 6))  ; Juan coloca en columna 2
 (define g6 (game-player-set-move g5 jugador2 3))  ; Mauricio coloca en columna 3
-(define g7 (game-player-set-move g6 jugador-actualizado3 2))  ; Juan coloca en columna 2
-(define g8 (game-player-set-move g7 jugador2 3))  ; Mauricio coloca en columna 3
+(define g7 (game-player-set-move g6 jugador-actualizado3 6))  ; Juan coloca en columna 2
+(define g8 (game-player-set-move g7 jugador2 6))  ; Mauricio coloca en columna 3
 (define g9 (game-player-set-move g8 jugador-actualizado3 3))  ; Juan coloca en columna 3
-(define g10 (game-player-set-move g9 jugador2 0)) ; Mauricio coloca en columna 0
+(define g10 (game-player-set-move g9 jugador2 6)) ; Mauricio coloca en columna 0
 (define g11 (game-player-set-move g10 jugador-actualizado3 3)) ; Juan coloca en columna 3
 (display g11)
 (newline)
@@ -90,7 +90,7 @@
     (list 'vacio 'yellow 'vacio 'vacio 'vacio 'vacio 'vacio)
     (list 'yellow 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio)))
 
-(board-check-diagonal-win test-board)
+(board-check-vertical-win a)
 
 
 ;; Lista inicial de IDs de jugadores
@@ -102,8 +102,10 @@
   (set! player-ids (cons player-id player-ids)))  ;; Agrega el ID a la lista
 
 ;; Ejemplo de uso
-(add-player jugador2)  ;; Jugador 1 pone una pieza
 (add-player jugador2)  ;; Jugador 2 pone una pieza
 (add-player jugador-actualizado3)  ;; Jugador 1 pone otra pieza
 
 (display player-ids)
+(newline)
+
+(game-get-board g11)

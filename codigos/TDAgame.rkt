@@ -99,7 +99,8 @@
 ; Rec: board
 ; Tipo recursión: No aplica.
 (define (game-get-board game)
-  (caddr game))
+  (list-ref game 2))
+
 
 ;; RF17
 ; Nombre: TDAgame-set-end
