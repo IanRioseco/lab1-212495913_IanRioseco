@@ -107,8 +107,7 @@
     (if (null? (car filas)) ;si la primera fila esta vacia indica que no hay mas columnas para verificar
         0 ;no hay ganador
         (let ((column (get-column filas)));caso contrario extrae la columna usando get-column para asignarla a column
-          (let ((result (check-column column)))
-            (display result);verifica la columna actual llamando a check-column y guarda el resultado en result
+          (let ((result (check-column column)));verifica la columna actual llamando a check-column y guarda el resultado en result
             (cond ;se inicia una condicion
               ((equal? result "red") 1);si el resultado es igual a 'red devuelve 1 por lo que el p1 gano
               ((equal? result "yellow") 2);si el resultado es igual a 'yellow devuelve 2 por lo que el p2 gano
@@ -171,8 +170,8 @@
       (else ;caso contrario
        (let ((result (check-row (car board))));se verifica la fila actual y se guarda el resultado
          (cond ;se inicia una condicion
-           ((equal? result 'red) 1);si el resultado es igual a 'red gana p1
-           ((equal? result 'yellow) 2);si el resultadoi es igual a 'yellow gana p1
+           ((equal? result "red") 1);si el resultado es igual a 'red gana p1
+           ((equal? result "yellow") 2);si el resultadoi es igual a 'yellow gana p1
            (else (check-rows (cdr board))))))));si no hay ganador se llama a check-rows con el resto de las filas
   (check-rows board));se inivia la verificacion de todas las filas
 
@@ -248,7 +247,7 @@
               (let ((asc (check-diagonal-ascending row col color))
                     (desc (check-diagonal-descending row col color)))
                 (if (or (>= asc 4) (>= desc 4))
-                    (if (eq? color 'red)
+                    (if (eq? color "red")
                         1
                         2)
                     (check-board row (+ col 1)))))))))

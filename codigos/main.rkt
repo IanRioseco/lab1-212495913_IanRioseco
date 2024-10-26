@@ -1,9 +1,17 @@
 #lang racket
+(provide (all-defined-out))
 (require "TDAplayer.rkt")
-;; Lista inicial de IDs de jugadores
-(define player-ids '())
 
-;; Función que recibe un jugador, saca su ID y lo agrega a la lista
-(define (add-player jugador)
-  (define player-id (get-player-id jugador))  ;; Saca el ID del jugador
-  (set! player-ids (cons player-id player-ids)))  ;; Agrega el ID a la lista
+;; Inicializar lista vacía de colores
+(define player-colors '())
+
+;; Función para agregar el color de un jugador y mantener solo dos valores
+(define (add-player-color color player-colors)
+  (if (< (length player-colors) 2)
+      (append player-colors (list color))  ;; Añade el color si hay menos de dos valores
+      player-colors))  ;; Devuelve sin cambios si ya tiene dos colores
+
+(define (get-player1 player-colors)
+  (cdr player-colors))
+
+
