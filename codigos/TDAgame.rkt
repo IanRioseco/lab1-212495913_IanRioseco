@@ -42,29 +42,23 @@
 ; Rec: game
 ; Tipo recursión: No aplica.
 (define (game-is-draw? game)
-  (let ((board (list-ref game 2)))
-    (cond
-      ((equal? (board-check-vertical-win board) 0)
-       (cond
-         ((eq? (board-can-play? board) #f) #t)
-         ((eq? (board-can-play? board) #t) #f)))   
-      ((equal? (board-check-vertical-win board) 2) #f)
-      ((equal? (board-check-vertical-win board) 1) #f)
-      
-      ((equal? (board-check-horizontal-win board) 0)
-       (cond
-         ((eq? (board-can-play? board) #f) #t)
-         ((eq? (board-can-play? board) #t) #f)))   
-      ((equal? (board-check-horizontal-win board) 2) #f)
-      ((equal? (board-check-horizontal-win board) 1) #f)
-      
-      ((equal? (board-check-diagonal-win board) 0)
-       (cond
-         ((eq? (board-can-play? board) #f) #t)
-         ((eq? (board-can-play? board) #t) #f)))   
-      ((equal? (board-check-diagonal-win board) 2) #f)
-      ((equal? (board-check-diagonal-win board) 1) #f))))
-       
+  (let* ((board (list-ref game 2))
+         (vertical (board-check-vertical-win board))
+         (horizontal (board-check-horizontal-win board))
+         (diagonal (board-check-diagonal-win board))
+         (player1 (get-game-player1 game))
+         (player2 (get-game-player2 game))
+         (fichas-p1 (get-player-remaining-pieces player1))
+         (fichas-p2 (get-player-remaining-pieces player2))
+         (tablero-lleno? (not (board-can-play? board))))  ; Cambia esto para reflejar correctamente si está lleno.
+    
+    (if (or (not (= vertical 0)) (not (= horizontal 0)) (not (= diagonal 0)))
+        #f  ; Hay un ganador, no es un empate.
+        (if (or tablero-lleno?                            ; El tablero está lleno.
+                (and (= fichas-p1 0) (= fichas-p2 0)))  ; Ambos jugadores sin fichas.
+            #t  ; Es un empate.
+            #f))))  ; No es un empate.
+
 
 ;; RF14
 ; Nombre: TDAboard player-update-stats
@@ -108,34 +102,6 @@
 ; Dom: game(game)
 ; Rec: game
 ; Tipo recursión: No aplica.
-#|
-(define (game-set-end game)
-  (let* ((hay-ganador? (board-who-is-winner (game-get-board game)))
-        (empate? (game-is-draw? game))
-        (p1 (get-game-player1 game))
-        (p2 (get-game-player2 game))
-        (bandera (cadr (cdddr game)))
-        (actualizar-p1 (if (= hay-ganador? 1)
-                           (player-update-stats (get-game-player1 game) 'win)
-                           (if (= hay-ganador? 2)
-                               (player-update-stats (get-game-player1 game) 'loss)
-                               (if (equal? empate? #t)
-                                   (player-update-stats (get-game-player1 game) 'draw)
-                                   (get-game-player1 game)))))
-        (actualizar-p2 (if (= hay-ganador? 2)
-                           (player-update-stats (get-game-player2 game) 'win)
-                           (if (= hay-ganador? 1)
-                               (player-update-stats (get-game-player2 game) 'loss)
-                               (if (equal? empate? #t)
-                                   (player-update-stats (get-game-player2 game) 'draw)
-                                   (get-game-player2 game)))))
-        (historial (game-history game))
-        (tablero (game-get-board game))
-        (turno-actual (get-game-current-turn game)))
-    (if (eq? bandera #t)
-        (list p1 p2 tablero turno-actual historial)
-        (list actualizar-p1 actualizar-p2 tablero turno-actual historial))))      
-|#
 (define (game-set-end game)
   (let* ((existe-ganador? (board-who-is-winner (game-get-board game)))
          (historial (game-history game))
@@ -213,15 +179,8 @@
                                                                                                                        (if (eq? es-empate? #t)
                                                                                                                            #t
                                                                                                                            #f)))))    
-              ;; Devolvemos el nuevo estado del juego
-              #|1(cond
-                ((equal? ganador? 1) game-aux)
-                ((equal? ganador? 2) game-aux)
-                ((equal? es-empate? #t) game-aux)
-                (else game-aux))|#
               game-aux)))))
 
-              ;(list actualizar-p1 actualizar-p2 nuevo-tablero actualizar-turno actualizar-historial)
        
          
               

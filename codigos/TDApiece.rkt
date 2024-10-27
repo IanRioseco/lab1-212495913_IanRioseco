@@ -7,7 +7,6 @@
 ; Dom: color (string).
 ; Rec: piece.
 ; Tipo recursión: No aplica.
-
 ;constructor
 (define (piece color)
   color)

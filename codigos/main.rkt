@@ -1,17 +1,10 @@
 #lang racket
 (provide (all-defined-out))
 
-
-;; PRIMER SCRIPT DE PRUEBA
+; Nombre: colores
+; Descripcion: funcion para crear una lista de colores, usada para la verificacion de victoria
+; Dom: color
+; Rec: lista colores
 (define colores
   (list "red" "yellow"))
-#|
-;; SEGUNDO SCRITP DE PRUEBA
-(define colores
-  (list "BLUE" "ORANGE"))
-
-;; TERCER SCRITP DE PRUEBA
-(define colores
-  (list "BLACK" "PINK"))
-|#
 

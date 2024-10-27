@@ -8,49 +8,28 @@
 ;Rec: player
 (define (player id name color wins losses draws remaining-pieces)
   (list id name color wins losses draws remaining-pieces))
-;; SELECTOR
-;Name:get-player-id
-;Dom: player
-;Rec: id del jugador
+
+;; SELECTOR 
 (define (get-player-id player)
-  (car player));car para obtener el primer elemento
+  (car player))
 
-;Name:get-palyer-name
-;Dom: player
-;Rec: nombre del jugador
 (define (get-player-name player)
-  (cadr player));cadr para obtener el segundo elemento
+  (cadr player))
 
-;Name:get-palyer-color
-;Dom: player
-;Rec: color de las fichas del jugador
 (define (get-player-color player)
-  (caddr player));caddr para obtener el tercer elemento
+  (caddr player))
 
-;Name:get-player-wins
-;Dom: player
-;Rec: numero de victorias
 (define (get-player-wins player)
-  (cadddr player));cadddr para obtener el 4 elemento
+  (cadddr player))
 
-;Name:get-player-losses
-;Dom: player
-;Rec: numero de derrotas
 (define (get-player-losses player)
-  (car(cddddr player)));con cddddr obtenemos la lista despues del 4 elemento y con car obtenemos el primer elemento de esa lista,
-                       ;osea obtenemos el 5 elemento
-;Name:get-player-draws
-;Dom: player
-;Rec: numero de empates
+  (car(cddddr player)))
+
 (define (get-player-draws player)
-  (cadr (cddddr player)));con cddddr obtenemos la lista despues del 4 elemento y con cadr obtenemos el segundo elemento de esa lista,
-                         ;osea obtenemos el 6 elemento
-;Name:get-player-remaining-pieces
-;Dom: player
-;Rec: numero de piezas restantes
+  (cadr (cddddr player)))
+
 (define (get-player-remaining-pieces player)
-  (caddr (cddddr player)));con cddddr obtenemos la lista despues del 4 elemento y con car obtenemos el tercer elemento de esa lista,
-                          ;osea obtenemos el 7 elemento
+  (caddr (cddddr player)))
 
 ;; MODIFICADOR
 ;funcion para actualizar las victorias del jugador
