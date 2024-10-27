@@ -2,6 +2,7 @@
 (provide (all-defined-out))
 (require "TDApiece.rkt")
 (require "main.rkt")
+
 ;; RF04
 ; Nombre: TDAboard
 ; Descripción: funcion que crea un tablero de conecta4 vacio.
@@ -109,8 +110,8 @@
         (let ((column (get-column filas)));caso contrario extrae la columna usando get-column para asignarla a column
           (let ((result (check-column column)));verifica la columna actual llamando a check-column y guarda el resultado en result
             (cond ;se inicia una condicion
-              ((equal? result "red") 1);si el resultado es igual a 'red devuelve 1 por lo que el p1 gano
-              ((equal? result "yellow") 2);si el resultado es igual a 'yellow devuelve 2 por lo que el p2 gano
+              ((equal? result (car colores)) 1);si el resultado es igual a 'red devuelve 1 por lo que el p1 gano
+              ((equal? result (cadr colores)) 2);si el resultado es igual a 'yellow devuelve 2 por lo que el p2 gano
               (else (check-columns (map cdr filas))))))));si no hay ganador llama a check-column pasandole las filas menos la primera usando pam cdr filas
   (check-columns board));se inicia la verificacion de las columnas
 
@@ -170,8 +171,8 @@
       (else ;caso contrario
        (let ((result (check-row (car board))));se verifica la fila actual y se guarda el resultado
          (cond ;se inicia una condicion
-           ((equal? result "red") 1);si el resultado es igual a 'red gana p1
-           ((equal? result "yellow") 2);si el resultadoi es igual a 'yellow gana p1
+           ((equal? result (car colores)) 1);si el resultado es igual a 'red gana p1
+           ((equal? result (cadr colores)) 2);si el resultadoi es igual a 'yellow gana p1
            (else (check-rows (cdr board))))))));si no hay ganador se llama a check-rows con el resto de las filas
   (check-rows board));se inivia la verificacion de todas las filas
 
@@ -246,12 +247,11 @@
               (check-board row (+ col 1))
               (let ((asc (check-diagonal-ascending row col color))
                     (desc (check-diagonal-descending row col color)))
-                (if (or (>= asc 4) (>= desc 4))
-                    (if (eq? color "red")
-                        1
-                        2)
+                (display color)
+                (if (or (>= asc 4) (>= desc 4))               
+                    (cond ((eq? color (cadr colores)) 2)
+                          (else 1))
                     (check-board row (+ col 1)))))))))
-  
   (check-board 0 0))  ; Empezar desde la primera fila
 
 
