@@ -64,6 +64,7 @@
 (define g42 (game-player-set-move g41 p2 5)) ; Mauricio coloca en columna 3
 
 
+
 ; 6. Verificaciones durante el juego
 (display "¿Se puede jugar en el tablero vacío? ")
 (board-can-play? empty-board)
@@ -95,7 +96,7 @@
 (game-is-draw? g42)
 
 ; 9. Finalizar el juego y actualizar estadísticas
-(define ended-game (game-set-end g42)
+(define ended-game (game-set-end g42))
 
 ; 10. Mostrar historial de movimientos
 (display "Historial de movimientos: ")

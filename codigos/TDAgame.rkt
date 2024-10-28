@@ -64,7 +64,7 @@
 ; Nombre: TDAboard player-update-stats
 ; Descripción: funcion que actualiza las estadisticas del jugador, ya sea victoria, derrota o empate
 ; Dom: player (player) X result (string: "win", "loss", o "draw")
-; Rec: 
+; Rec: player (player)
 ; Tipo recursión: No aplica.
 (define player-update-stats
   (lambda (player result)
