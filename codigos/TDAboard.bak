@@ -1,7 +1,7 @@
 #lang racket
 (provide (all-defined-out))
 (require "TDApiece.rkt")
-(require "colores.rkt")
+(require "main.rkt")
 
 ;; RF04
 ; Nombre: TDAboard
@@ -11,7 +11,7 @@
 ; Tipo recursión: No aplica.
 
 (define columnas
-  (list 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio))
+  (list 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio 'vacio))  ; Cambia los valores según lo que quieras
 
 (define board
   (list columnas
@@ -19,7 +19,7 @@
         columnas
         columnas
         columnas
-        columnas))  ; Tablero de 6 filas
+        columnas))  ; Tablero de 5 filas por ejemplo
 
 ;; RF05
 ; Nombre: TDABoard-otros-sepuedejugar?
@@ -178,7 +178,7 @@
               (let ((asc (check-diagonal-ascending row col color))
                     (desc (check-diagonal-descending row col color)))
                 (if (or (>= asc 4) (>= desc 4))               
-                    (cond ((eq? color (car colores)) 2)
+                    (cond ((eq? color (cadr colores)) 2)
                           (else 1))
                     (check-board row (+ col 1)))))))))
   (check-board 0 0))  ; Empezar desde la primera fila

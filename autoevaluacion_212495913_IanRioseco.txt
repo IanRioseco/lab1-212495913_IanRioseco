@@ -1,0 +1,41 @@
+Escala:
+0: No realizado.
+0.25: Implementación con problemas mayores (funciona 25% de las veces o no funciona)
+0.5: Implementación con funcionamiento irregular (funciona 50% de las veces)
+0.75: Implementación con problemas menores (funciona 75% de las veces)
+1: Implementación completa sin problemas (funciona 100% de las veces)
+
+TDA / Función / Puntaje
+
+TDA Player-constructor / player / 1
+TDA Player-selector / get-player-id / 1
+TDA Player-selector / get-player-name / 1
+TDA Player-selector / get-player-color / 1
+TDA Player-selector / get-player-wins / 1
+TDA Player-selector / get-player-losses / 1
+TDA Player-selector / get-player-draws / 1
+TDA Player-selector / get-player-remaining-pieces / 1
+TDA Player-modificador / increment-player-wins / 1
+TDA Player-modificador / increment-player-losses / 1
+TDA Player-modificador / increment-player-draw / 1
+TDA Player-modificador / decrease-player-pieces / 1
+
+TDA Piece-constructor / piece / 1
+TDA Piece-selector / color / 1
+
+TDA Board-constructor / board / 1
+TDA Board-otros / board-can-play? / 1
+TDA Board-otros / board-check-vertical-win / 0,75
+TDA Board-otros / board-check-horizontal-win / 0,75
+TDA Board-otros / board-check-diagonal-win / 0,75
+TDA Board-otros / board-who-is-winner / 1
+TDA Board-modificador / board-set-play-piece / 1
+
+TDA Game-constructor / game / 1
+TDA Game-otros / game-history / 1
+TDA Game-otros / game-is-draw? / 1
+TDA Game-otros / game-update-stats / 1
+TDA Game-selector / game-get-current-player / 1
+TDA Game-selector / game-get-board / 1
+TDA Game-modificador / game-set-end / 1
+TDA Game-modificador / game-player-set-move / 0,75
