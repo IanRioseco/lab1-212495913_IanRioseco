@@ -1,0 +1,4 @@
+Para un correcto uso de los script de prueba, se debe tener abierto todos los archivos de la carpeta códigos esto para que no hayan errores al momento de ejecutar los script.
+si se desea probar el funcionamiento ya se de los script o pruebas que se deseen realzar con otros colores aparte de red y yellow, es importante que se realize el cambio de estos en la función colores definida dentro del archivo colores.rkt, esto para el correcto funcionamiento de las funciones que hacen uso de esta funcion.
+las columnas de juego van desde 0 a 6, si se pasa de este rango el código le lanzara errores, procurar siempre estar dentro de este rango al jugar.
+Si se desean realizar mas pruebas para el funcionamiento del laboratorio, estas deben ser realizas dentro del archivo main.rkt.
