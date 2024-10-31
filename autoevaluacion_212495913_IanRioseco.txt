@@ -28,7 +28,7 @@ TDA Board-otros / board-can-play? / 1
 TDA Board-otros / board-check-vertical-win / 0,75
 TDA Board-otros / board-check-horizontal-win / 0,75
 TDA Board-otros / board-check-diagonal-win / 0,75
-TDA Board-otros / board-who-is-winner / 1
+TDA Board-otros / board-who-is-winner / 0,75
 TDA Board-modificador / board-set-play-piece / 1
 
 TDA Game-constructor / game / 1
