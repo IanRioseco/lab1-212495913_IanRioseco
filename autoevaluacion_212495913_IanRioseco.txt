@@ -34,7 +34,7 @@ TDA Board-modificador / board-set-play-piece / 1
 TDA Game-constructor / game / 1
 TDA Game-otros / game-history / 1
 TDA Game-otros / game-is-draw? / 1
-TDA Game-otros / game-update-stats / 1
+TDA Game-otros / player-update-stats / 1
 TDA Game-selector / game-get-current-player / 1
 TDA Game-selector / game-get-board / 1
 TDA Game-modificador / game-set-end / 1
